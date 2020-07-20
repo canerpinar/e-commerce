@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>controller</module>
+        <module>authentication</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
