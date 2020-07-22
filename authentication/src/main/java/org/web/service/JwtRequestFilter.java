@@ -27,15 +27,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
-        Enumeration<String> headers = httpServletRequest.getAttributeNames();
-        System.out.println("PARAMETER : " + httpServletRequest.getAttributeNames());
-        System.out.println("--------------" + httpServletRequest.getAttribute("json"));
-        System.out.println("--------------" + httpServletRequest.getParameter("json"));
-        while (headers.hasMoreElements()){
-            String header = headers.nextElement();
-            System.out.println("headers name : " + header);
-            System.out.println("header value : " + httpServletRequest.getAttribute(header));
-        }
         final String tokenHeader = httpServletRequest.getHeader("Authorization");
 
         String username = null;
@@ -56,7 +47,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
-            if(jwtTokenUtil.validateToken(tokenHeader,userDetails)){
+            if(jwtTokenUtil.validateToken(jwtToken,userDetails)){
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new
                         UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
