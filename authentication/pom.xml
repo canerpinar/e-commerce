@@ -11,7 +11,14 @@
 
     <artifactId>authentication</artifactId>
     <packaging>jar</packaging>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+    </properties>
+
 <dependencies>
+
     <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt</artifactId>
@@ -19,4 +26,25 @@
     </dependency>
 </dependencies>
 
+    <build>
+        <finalName>authentication</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <classpathPrefix>lib/</classpathPrefix>
+                        <mainClass>org.web.Authentication</mainClass>
+                    </manifest>
+                </archive>
+
+
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
 </project>
